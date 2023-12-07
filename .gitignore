@@ -1,2 +1,4 @@
 data
 .DS_Store
+arrays
+__pycache__
