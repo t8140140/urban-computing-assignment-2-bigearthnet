@@ -1,0 +1,12 @@
+{
+    "model_name": "VGG16",
+    "modality": "MM",
+    "batch_size":1000,
+    "nb_epoch":100,
+    "learning_rate":1e-3,
+    "save_checkpoint_per_iteration": 300,
+    "save_checkpoint_after_iteration": 3000,
+    "out_dir": "model_weights/BigEarthNetMM-19_labels/VGG16",
+    "model_file": "model_weights/BigEarthNetMM-19_labels/VGG16/VGG16_BigEarthNetMM-19_labels",
+    "label_type": "BigEarthNet-19"
+}

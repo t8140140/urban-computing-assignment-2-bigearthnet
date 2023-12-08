@@ -1,0 +1,12 @@
+{
+    "model_name": "ResNet50",
+    "modality": "MM",
+    "batch_size":500,
+    "nb_epoch":100,
+    "learning_rate":1e-3,
+    "save_checkpoint_per_iteration": 600,
+    "save_checkpoint_after_iteration": 6000,
+    "out_dir": "model_weights/BigEarthNetMM-19_labels/ResNet50",
+    "model_file": "model_weights/BigEarthNetMM-19_labels/ResNet50/ResNet50_BigEarthNetMM-19_labels",
+    "label_type": "BigEarthNet-19"
+}
