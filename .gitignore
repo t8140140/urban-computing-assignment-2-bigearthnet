@@ -2,3 +2,5 @@ data
 .DS_Store
 arrays
 __pycache__
+weights
+logs
