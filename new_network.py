@@ -4,25 +4,32 @@ from tensorflow.keras import layers, models
 from tensorflow.keras.callbacks import TensorBoard
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import precision_score, recall_score, f1_score
-
+import sys
 from datetime import datetime
 
 
-folders_clean = np.load("arrays/clean_folders.npy")
+arg = sys.argv
+if len(arg)==1:
+    folders_clean = np.load("arrays/clean_folders.npy")
+    input_clean = np.load("arrays/clean_input.npy")
+    labels_clean = np.load("arrays/clean_labels.npy")
+elif len(arg)==2:
+    folders_clean = np.load(f"arrays/folders_{arg[1]}.npy")
+    input_clean = np.load(f"arrays/input_{arg[1]}.npy")
+    labels_clean = np.load(f"arrays/labels_{arg[1]}.npy")
+else:
+    Exception("Too many command line arguments given. Will fail.")
 
-input_clean = np.load("arrays/clean_input.npy")
 input_clean = input_clean.reshape(len(input_clean),120,120,3)
 input_shape = input_clean.shape
 input_clean = tf.squeeze(input_clean)
-print(input_clean.shape)
-labels_clean = np.load("arrays/clean_labels.npy")
 labels_categorical = tf.keras.utils.to_categorical(labels_clean, num_classes=10)
+
+print("Arrays have been loaded...")
 
 test_split = True
 if test_split:
     input_clean = input_clean.numpy()
-
-    print(labels_categorical[:10])
     input_train, input_test, labels_train, labels_test = train_test_split(
         input_clean, labels_categorical, test_size=0.2, random_state=42
     )
@@ -31,6 +38,8 @@ if test_split:
     labels_train = tf.convert_to_tensor(labels_train, dtype=tf.float32)
     input_test = tf.convert_to_tensor(input_test, dtype=tf.float32)
     labels_test = tf.convert_to_tensor(labels_test, dtype=tf.float32)
+
+print("Train test split successful...")
 
 # Define the CNN model
 model = models.Sequential()
@@ -68,6 +77,7 @@ model.add(layers.Dense(10, activation='softmax'))
 model.summary()
 
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+print(f"new_network at {timestamp}.")
 # Compile the model
 log_dir = f"logs/new_{timestamp}/"  # Choose a suitable directory
 tensorboard_callback = TensorBoard(log_dir=log_dir, histogram_freq=1)
@@ -92,7 +102,6 @@ print(f"\nTest Accuracy: {test_accuracy * 100:.2f}%")
 predictions = model.predict(input_clean)
 predicted_labels = np.argmax(predictions, axis=1)
 true_labels = np.argmax(labels_clean, axis=1)
-
 
 precision = precision_score(true_labels, predicted_labels, average='weighted')
 recall = recall_score(true_labels, predicted_labels, average='weighted')
