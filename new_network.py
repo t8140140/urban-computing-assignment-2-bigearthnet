@@ -13,10 +13,12 @@ if len(arg)==1:
     folders_clean = np.load("arrays/clean_folders.npy")
     input_clean = np.load("arrays/clean_input.npy")
     labels_clean = np.load("arrays/clean_labels.npy")
+    n = 'full'
 elif len(arg)==2:
     folders_clean = np.load(f"arrays/folders_{arg[1]}.npy")
     input_clean = np.load(f"arrays/input_{arg[1]}.npy")
     labels_clean = np.load(f"arrays/labels_{arg[1]}.npy")
+    n = arg[1]
 else:
     Exception("Too many command line arguments given. Will fail.")
 
@@ -25,7 +27,7 @@ input_shape = input_clean.shape
 input_clean = tf.squeeze(input_clean)
 labels_categorical = tf.keras.utils.to_categorical(labels_clean, num_classes=10)
 
-print("Arrays have been loaded...")
+print(f"Arrays of length {n} have been loaded...")
 
 test_split = True
 if test_split:
@@ -79,7 +81,7 @@ model.summary()
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 print(f"new_network at {timestamp}.")
 # Compile the model
-log_dir = f"logs/new_{timestamp}/"  # Choose a suitable directory
+log_dir = f"logs/new_{timestamp}_{n}­/"  # Choose a suitable directory
 tensorboard_callback = TensorBoard(log_dir=log_dir, histogram_freq=1,update_freq='batch')
 # callback = tf.keras.callbacks.ModelCheckpoint(filepath='beNet50.h5', monitor='acc', mode="max", save_best_only=True)
 checkpoint_path = f"weights/new_{timestamp}.h5"
