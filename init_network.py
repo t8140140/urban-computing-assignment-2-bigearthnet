@@ -55,7 +55,7 @@ model.summary()
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 print(f"init_network at {timestamp}.")
 log_dir = f"logs/init_{timestamp}/"  # Choose a suitable directory
-tensorboard_callback = TensorBoard(log_dir=log_dir, histogram_freq=1)
+tensorboard_callback = TensorBoard(log_dir=log_dir, histogram_freq=1,update_freq='batch')
 
 checkpoint_path = f"weights/init_{timestamp}.h5"
 # default metric to compare whether it's "best" is loss

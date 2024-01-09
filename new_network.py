@@ -80,7 +80,7 @@ timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 print(f"new_network at {timestamp}.")
 # Compile the model
 log_dir = f"logs/new_{timestamp}/"  # Choose a suitable directory
-tensorboard_callback = TensorBoard(log_dir=log_dir, histogram_freq=1)
+tensorboard_callback = TensorBoard(log_dir=log_dir, histogram_freq=1,update_freq='batch')
 # callback = tf.keras.callbacks.ModelCheckpoint(filepath='beNet50.h5', monitor='acc', mode="max", save_best_only=True)
 checkpoint_path = f"weights/new_{timestamp}.h5"
 # default metric to compare whether it's "best" is loss
