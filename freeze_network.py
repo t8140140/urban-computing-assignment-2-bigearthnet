@@ -59,7 +59,7 @@ log_dir = f"logs/freeze_{timestamp}/"
 tensorboard_callback = TensorBoard(log_dir=log_dir, histogram_freq=1,update_freq='batch')
 
 checkpoint_path = f"weights/freeze_{timestamp}.h5"
-# default metric to compare whether it's "best" is loss
+
 model_callback = tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_path, save_best_only=True, save_weights_only=True)
 
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])

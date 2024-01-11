@@ -54,11 +54,11 @@ model.summary()
 
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 print(f"init_network at {timestamp}.")
-log_dir = f"logs/init_{timestamp}/"  # Choose a suitable directory
+log_dir = f"logs/init_{timestamp}/"
 tensorboard_callback = TensorBoard(log_dir=log_dir, histogram_freq=1,update_freq='batch')
 
 checkpoint_path = f"weights/init_{timestamp}.h5"
-# default metric to compare whether it's "best" is loss
+
 model_callback = tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_path, save_best_only=True, save_weights_only=True)
 
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
